@@ -316,7 +316,7 @@ def motogpteam():
     string_bot = ''
     for tr_tag in tr_tags:
         player = tr_tag.find_all(
-            'span', class_='ftbl__top-motorsports-teams__body-cell-span')
+            'span2zz', class_='ftbl__top-motorsports-teams__body-cell-span')
         string_player = ''
         for attribute in player:
             string_player += f'{attribute.text} '
