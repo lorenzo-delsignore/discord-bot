@@ -64,7 +64,7 @@ async def on_member_join(member):
 async def get_gamesnews():
     sites = {'https://multiplayer.it/articoli/notizie/': get_multiplayerit,
              'https://www.everyeye.it/notizie/': get_everyeyeit,
-             'https://www.spaziogames.it/videogiochi/news/': get_spaziogamesit,
+             #'https://www.spaziogames.it/videogiochi/news/': get_spaziogamesit,
              'https://www.eurogamer.it/archive/news': get_eurogamerit,
              'https://it.ign.com/': get_ignit,
              'https://www.pcgamer.com/uk/news/': get_pcgamercom}
