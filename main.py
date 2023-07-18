@@ -60,7 +60,7 @@ async def on_member_join(member):
     await channel.send(f'Welcome to KlindaTV server {member.mention}. Enjoy your stay!')
 
 
-@tasks.loop(minutes=30)
+@tasks.loop(minutes=60)
 async def get_gamesnews():
     sites = {'https://multiplayer.it/articoli/notizie/': get_multiplayerit,
              'https://www.everyeye.it/notizie/': get_everyeyeit,
