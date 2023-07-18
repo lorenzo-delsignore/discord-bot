@@ -84,7 +84,9 @@ async def get_gamesnews():
 async def get_multiplayerit(soup, dict_news):
     div_news = soup.find_all('div', class_='media-body')
     for news in div_news:
-        titles = news.find('a', class_='text-decoration-none')
+        titles = news.find('a', class_='text-decoration-none stretched-link')
+        if titles == None:
+            continue
         title_news = titles.text.strip()
         link_news = f'https://multiplayer.it{titles["href"]}'
 
