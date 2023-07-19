@@ -229,19 +229,21 @@ async def seriea(ctx):
 
 
 def seriea():
-    url = 'https://www.legaseriea.it/it/serie-a/classifica'
+    url = "https://www.tuttosport.com/live/classifica-serie-a"
     text = requests.get(url, headers=headers).text
-    soup = BeautifulSoup(text, 'lxml')
-    tr_tags = soup.find_all('tr', class_='')
-    string = 'P TEAM PT \n'
-    for tr_tag in tr_tags:
-        pos = tr_tag.find('span', class_='pos').text
-        team_name = tr_tag.find('img')['title']
-        points = tr_tag.find('td', class_='blue').text
-        string += f'{pos} {team_name} {points}\n'
-        if pos == '20':
-            break
-    return string
+    soup = BeautifulSoup(text, "lxml")
+    tr_tags = soup.find_all("tr")
+    heading = tr_tags[0].get_text(separator=" ")
+    output_string = f"{heading}\n"
+    for i in range(1, len(tr_tags)):
+        name_team = tr_tags[i].find("a", href=True).text
+        output_string += f"{str(i)} {name_team} "
+        statistics = tr_tags[i].find_all("td")[2:]
+        for stat in statistics:
+            stat = stat.text
+            output_string += f"{stat} "
+        output_string += "\n"
+    return output_string
 
 
 @client.command()
