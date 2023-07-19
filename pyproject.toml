@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "discordbot"
+version = "1.0.0"
+readme = "README.md"
+dependencies = [
+    "discord",
+    "aiohttp",
+    "requests",
+    "beautifulsoup4",
+    "lxml"
+]
