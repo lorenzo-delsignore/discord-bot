@@ -334,4 +334,57 @@ def motogpteam():
     return string_bot
 
 
+@client.command()
+async def metacritic(ctx, *, game):
+    text = get_metacritic(game)
+    await ctx.send(text)
+
+
+def get_metacritic(game):
+    platforms_to_metacritic = {
+        "ps5": "PS5",
+        "ps4": "PS4",
+        "ps3": "PS3",
+        "ps2": "PS2",
+        "xbox series x": "XBSX",
+        "xbox one": "XONE",
+        "xbox 360": "X360",
+        "xbox": "XBOX",
+        "switch": "Switch",
+        "pc": "PC",
+    }
+    game = game.lower()
+    selected_platform = None
+    for platform in platforms_to_metacritic.keys():
+        if platform in game:
+            selected_platform = platform
+            game = game.replace(selected_platform, "").strip()
+            selected_platform = platforms_to_metacritic[selected_platform]
+    for i in range(2):
+        url = f"https://www.metacritic.com/search/game/{game}/results?sort=relevancy&page={i}"
+        text = requests.get(url, headers=headers).text
+        soup = BeautifulSoup(text, "lxml")
+        li_tags = soup.find_all("li", class_=["result first_result", "result"])
+        for li_tag in li_tags:
+            platform = li_tag.find("span", class_="platform")
+            if not platform:
+                continue
+            platform = platform.text
+            game_name = li_tag.find("a", href=True).text.strip()
+            score = li_tag.find("span").text
+            platform_and_date = li_tag.find("p").text
+            platform_and_date = " ".join(platform_and_date.split())
+            a_tag = li_tag.find("a", href=True)
+            site = f"https://www.metacritic.com{a_tag['href']}"
+            output_string = (
+                f"Metacritic <{game_name} ({platform_and_date})>: {score} ~ {site}"
+            )
+            if not selected_platform:
+                return output_string
+            if selected_platform == platform:
+                return output_string
+    output_string = f"Metacritic <{game}>: no results."
+    return output_string
+
+
 client.run(token)
