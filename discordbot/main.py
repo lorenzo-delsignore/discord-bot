@@ -334,6 +334,12 @@ def motogpteam():
     return string_bot
 
 
+@client.command()
+async def metacritic(ctx, *, game):
+    text = get_metacritic(game)
+    await ctx.send(text)
+
+
 def get_metacritic(game):
     platforms_to_metacritic = {
         "ps5": "PS5",
