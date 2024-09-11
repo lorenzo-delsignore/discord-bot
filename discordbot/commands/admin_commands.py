@@ -5,7 +5,7 @@ class Admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="kick")
+    @commands.command()
     @commands.has_role("Mod")
     async def kick(self, ctx, member: commands.MemberConverter, *, reason=None):
         try:
@@ -14,7 +14,7 @@ class Admin(commands.Cog):
         except Exception as e:
             await ctx.send(f"Failed to kick {member.display_name}: {e}")
 
-    @commands.command(name="ban")
+    @commands.command()
     @commands.has_role("Mod")
     async def ban(self, ctx, member: commands.MemberConverter, *, reason=None):
         try:
@@ -23,7 +23,7 @@ class Admin(commands.Cog):
         except Exception as e:
             await ctx.send(f"Failed to ban {member.display_name}: {e}")
 
-    @commands.command(name="unban")
+    @commands.command()
     @commands.has_role("Mod")
     async def unban(self, ctx, *, member):
         try:
