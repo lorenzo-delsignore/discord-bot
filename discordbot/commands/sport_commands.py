@@ -1,6 +1,12 @@
 from discord.ext import commands
 
-from discordbot.utils.helpers import get_f1, get_f1team, get_motogp, get_motogpteam, get_seriea
+from discordbot.utils.helpers import (
+    get_f1,
+    get_f1team,
+    get_motogp,
+    get_motogpteam,
+    get_seriea,
+)
 
 
 class SportCommands(commands.Cog):

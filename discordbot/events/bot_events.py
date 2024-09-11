@@ -39,5 +39,6 @@ class BotEvents(commands.Cog):
                     with open("dictionary_news.json", "w") as f:
                         json.dump(dict_newsa, f)
 
+
 async def setup(bot):
     await bot.add_cog(BotEvents(bot))

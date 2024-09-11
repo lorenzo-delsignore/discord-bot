@@ -1,6 +1,5 @@
 import urllib
 
-import requests
 from bs4 import BeautifulSoup
 
 from discordbot.utils.scrapers import get_html

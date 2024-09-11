@@ -2,9 +2,6 @@ import datetime
 import json
 from configparser import ConfigParser
 
-import aiohttp
-from bs4 import BeautifulSoup
-
 from discordbot.utils.scrapers import (
     get_eurogamerit,
     get_everyeyeit,
@@ -33,7 +30,7 @@ async def get_gamenews(client):
         "it": [
             get_multiplayerit,
             get_everyeyeit,
-            #get_spaziogamesit,
+            # get_spaziogamesit,
             get_eurogamerit,
             get_ignit,
         ],
