@@ -26,7 +26,7 @@ async def bot_send_news(client, list_news, dict_news, id_channel):
             await channel.send(f"{title_news} {link_news}")
 
 
-async def get_gamesnews(client):
+async def get_gamenews(client):
     config = ConfigParser()
     config.read("config.ini")
     sites = {

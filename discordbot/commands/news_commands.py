@@ -1,5 +1,5 @@
 from discord.ext import commands
-from discordbot.utils.news import get_gamesnews
+from discordbot.utils.news import get_gamenews
 
 
 class NewsCommands(commands.Cog):
@@ -8,7 +8,7 @@ class NewsCommands(commands.Cog):
 
     @commands.command()
     async def gamenews(self, ctx):
-        news = await get_gamesnews()
+        news = await get_gamenews()
         await ctx.send(news)
 
 
