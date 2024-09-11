@@ -1,4 +1,22 @@
-async def get_multiplayerit(soup):
+import aiohttp
+from bs4 import BeautifulSoup
+
+
+async def get_html(url):
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)"
+        " Chrome/91.0.4472.106 Safari/537.36",
+        "Accept-Language": "it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7",
+    }
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url, headers=headers) as resp:
+            return await resp.text()
+
+
+async def get_multiplayerit():
+    url = "https://multiplayer.it/articoli/notizie/"
+    text = await get_html(url)
+    soup = BeautifulSoup(text, "lxml")
     list_news = []
     div_news = soup.find_all("div", class_="media-body")
     for news in div_news:
@@ -11,7 +29,10 @@ async def get_multiplayerit(soup):
     return list_news
 
 
-async def get_everyeyeit(soup):
+async def get_everyeyeit():
+    url = "https://www.everyeye.it/notizie/"
+    text = await get_html(url)
+    soup = BeautifulSoup(text, "lxml")
     list_news = []
     div_news = soup.find_all("div", class_="testi_notizia")
     for news in div_news:
@@ -22,7 +43,10 @@ async def get_everyeyeit(soup):
     return list_news
 
 
-async def get_spaziogamesit(soup):
+async def get_spaziogamesit():
+    url = "https://www.spaziogames.it/videogiochi/news/"
+    text = await get_html(url)
+    soup = BeautifulSoup(text, "lxml")
     list_news = []
     div_news = soup.find_all("div", class_="post_template_standard_text")
     for news in div_news:
@@ -33,7 +57,10 @@ async def get_spaziogamesit(soup):
     return list_news
 
 
-async def get_eurogamerit(soup):
+async def get_eurogamerit():
+    url = "https://www.eurogamer.it/archive/news"
+    text = await get_html(url)
+    soup = BeautifulSoup(text, "lxml")
     list_news = []
     div_news = soup.find_all("div", class_="compact-archive-item")
     for news in div_news:
@@ -44,7 +71,10 @@ async def get_eurogamerit(soup):
     return list_news
 
 
-async def get_ignit(soup):
+async def get_ignit():
+    url = "https://it.ign.com/"
+    text = await get_html(url)
+    soup = BeautifulSoup(text, "lxml")
     list_news = []
     article_news = soup.find_all("article", class_="article NEWS")
     for news in article_news:
@@ -55,7 +85,10 @@ async def get_ignit(soup):
     return list_news
 
 
-async def get_pcgamercom(soup):
+async def get_pcgamercom():
+    url = "https://www.pcgamer.com/uk/news/"
+    text = await get_html(url)
+    soup = BeautifulSoup(text, "lxml")
     list_news = []
     a_tag = soup.find_all("a", class_="article-link")
     for tag in a_tag:
