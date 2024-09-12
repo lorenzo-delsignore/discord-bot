@@ -1,3 +1,5 @@
+import json
+
 import aiohttp
 from bs4 import BeautifulSoup
 
@@ -95,4 +97,61 @@ async def get_pcgamercom():
         title_news = tag["aria-label"]
         link_news = tag["href"]
         list_news.append(("pcgamer.com", link_news, title_news))
+    return list_news
+
+
+async def get_forbes_ai():
+    url = "https://www.forbes.com/ai/"
+    text = await get_html(url)
+    soup = BeautifulSoup(text, "lxml")
+    list_news = []
+    a_tag = soup.find_all(
+        "a", {"class": ["_1-FLFW4R", "text-decoration-color:black", "zEzPL6aA"]}
+    )
+    for news in a_tag:
+        title_news = news.text
+        link_news = news["href"]
+        list_news.append(("forbes.com", link_news, title_news))
+    return list_news
+
+
+async def get_venturebeat_ai():
+    url = "https://venturebeat.com/category/ai/"
+    text = await get_html(url)
+    soup = BeautifulSoup(text, "lxml")
+    list_news = []
+    a_tag = soup.find_all("a", class_="ArticleListing__title-link")
+    for news in a_tag:
+        title_news = news["title"]
+        link_news = news["href"]
+        list_news.append(("venturebeat.com", link_news, title_news))
+    article_tag = soup.find_all(
+        "article", {"class": ["FeaturedArticles__hero", "FeaturedArticles__article"]}
+    )
+    for news in article_tag:
+        a_tag = news.find("a")
+        title_news = a_tag.text.strip()
+        link_news = a_tag["href"]
+        list_news.append(("venturebeat.com", link_news, title_news))
+    return list_news
+
+
+async def get_technology_review_ai():
+    url = "https://wp.technologyreview.com/wp-json/irving/v1/data/topic_feed?page=1&orderBy=date&topic=9&requestType=topic"
+    text = await get_html(url)
+    list_news = []
+    data_json = json.loads(text)
+    extract_news = data_json[0]["feedPosts"]
+    len_news = len(extract_news)
+    for i in range(len_news - 1):
+        try:
+            title_news = extract_news[i]["config"]["hed"]
+            link_news = extract_news[i]["config"]["link"]
+            list_news.append(("technologyreview.com", link_news, title_news))
+        except KeyError:
+            continue
+    extract_news = data_json[0]["featuredPost"]
+    title_news = extract_news["config"]["hed"]
+    link_news = extract_news["config"]["link"]
+    list_news.append(("technologyreview.com", link_news, title_news))
     return list_news
