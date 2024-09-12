@@ -5,7 +5,7 @@ import json
 import discord
 from discord.ext import commands, tasks
 
-from discordbot.utils.news import get_gamenews
+from discordbot.utils.news import get_ainews, get_gamenews
 
 
 class BotEvents(commands.Cog):
@@ -18,11 +18,17 @@ class BotEvents(commands.Cog):
         print(f"We have logged in as {self.bot.user}")
         self.gamenews.start()
         await asyncio.sleep(50)
+        self.ainews.start()
+        await asyncio.sleep(50)
         self.delete_news.start()
 
     @tasks.loop(minutes=60)
     async def gamenews(self):
         await get_gamenews(self.bot)
+
+    @tasks.loop(minutes=60)
+    async def ainews(self):
+        await get_ainews(self.bot)
 
     @tasks.loop(hours=24)
     async def delete_news(self):

@@ -5,9 +5,12 @@ from configparser import ConfigParser
 from discordbot.utils.scrapers import (
     get_eurogamerit,
     get_everyeyeit,
+    get_forbes_ai,
     get_ignit,
     get_multiplayerit,
     get_pcgamercom,
+    get_technology_review_ai,
+    get_venturebeat_ai,
 )
 
 
@@ -53,3 +56,23 @@ async def get_gamenews(client):
             await bot_send_news(client, list_news, dict_news, id_channel)
             with open("dictionary_news.json", "w") as f:
                 json.dump(dict_news, f)
+
+
+async def get_ainews(client):
+    config = ConfigParser()
+    config.read("config.ini")
+    sites = [
+        # get_business_ai,
+        get_forbes_ai,
+        get_venturebeat_ai,
+        get_technology_review_ai,
+    ]
+    for function in sites:
+        with open("dictionary_news.json", "r") as f:
+            dict_news = json.load(f)
+        list_news = await function()
+        await bot_send_news(
+            client, list_news, dict_news, config["channels"].getint("id_ainews")
+        )
+        with open("dictionary_news.json", "w") as f:
+            json.dump(dict_news, f)
